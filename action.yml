@@ -1,0 +1,36 @@
+name: No root-relative links
+
+author: 18F
+
+description: |
+  Scans a collection of source files (HTML and Markdown, primarily) for a
+  static-site generator to verify that there are no links relative to the root
+  (e.g., links that start with /). Links relative to the site root should be
+  prefixed with something like Jekyll's site.baseurl, to ensure they will work
+  correctly regardless of how/where they are deployed.
+
+  If any links with root-relative paths are found, this action will fail and
+  annotate all of those files with the specified message
+
+inputs:
+  path:
+    description: |
+      Path to the directory containing your source files. This directory will be
+      scanned recursively.
+    required: false
+    default: "."
+  message:
+    description: |
+      The message to include in annotations for links that are root-relative.
+    required: false
+    default: "This internal link is root-relative and should be prefixed."
+
+runs:
+  using: 'composite'
+  steps:
+    - run: ./check-links.sh "${{ inputs.path }}" "${{ inputs.message }}"
+      shell: bash
+
+branding:
+  icon: link
+  color: gray-dark
