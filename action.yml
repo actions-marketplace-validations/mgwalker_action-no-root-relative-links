@@ -28,7 +28,7 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - run: ./check-links.sh "${{ inputs.path }}" "${{ inputs.message }}"
+    - run: ${GITHUB_ACTION_PATH}/check-links.sh "${{ inputs.path }}" "${{ inputs.message }}"
       shell: bash
 
 branding:
